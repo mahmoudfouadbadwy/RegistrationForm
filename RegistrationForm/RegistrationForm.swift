@@ -10,7 +10,7 @@ import SwiftUI
 struct RegistrationForm: View {
     
     @ObservedObject private var userRegistrationViewModel
-        = UserRegistrationViewModel()
+    = UserRegistrationViewModel()
     
     var body: some View {
         VStack {
@@ -20,11 +20,11 @@ struct RegistrationForm: View {
                 .bold()
                 .padding(.bottom, 30)
             
-            FormField(fieldName: "Username", fieldValue: $userRegistrationViewModel.username)
-                
+            FormField(fieldName: "Username",
+                      fieldValue: $userRegistrationViewModel.username)
+            
             RequirementText(iconColor: userRegistrationViewModel.isUsernameLengthValid ? Color.secondary : Color(red: 251/255, green: 128/255, blue: 128/255), text: "A minimum of 4 characters", isStrikeThrough: userRegistrationViewModel.isUsernameLengthValid)
                 .padding()
-            
             
             
             FormField(fieldName: "Password", fieldValue: $userRegistrationViewModel.password, isSecure: true)
@@ -32,13 +32,13 @@ struct RegistrationForm: View {
             VStack {
                 RequirementText(iconName: "lock.open",
                                 iconColor: userRegistrationViewModel.isPasswordLengthValid ?
-                                    Color.secondary : Color(red: 251/255, green: 128/255, blue: 128/255),
+                                Color.secondary : Color(red: 251/255, green: 128/255, blue: 128/255),
                                 text: "Aminimum of 8 characters", isStrikeThrough: userRegistrationViewModel.isPasswordLengthValid)
                 
                 RequirementText(iconName: "lock.open", iconColor:
                                     userRegistrationViewModel.isPasswordCapitalLetter ?
-                                    Color.secondary : Color(red: 251/255, green: 128/255,
-                                                            blue: 128/255), text: "One uppercase letter",
+                                Color.secondary : Color(red: 251/255, green: 128/255,
+                                                        blue: 128/255), text: "One uppercase letter",
                                 isStrikeThrough:
                                     userRegistrationViewModel.isPasswordCapitalLetter)
                 
@@ -47,15 +47,15 @@ struct RegistrationForm: View {
             
             FormField(fieldName: "Confirm Password",
                       fieldValue: $userRegistrationViewModel.passwordConfirm, isSecure: true)
-                
+            
             
             RequirementText(iconColor:
                                 userRegistrationViewModel.isPasswordConfirmValid ?
-                                Color.secondary : Color(red: 251/255, green: 128/255,
-                                                        blue: 128/255),
+                            Color.secondary : Color(red: 251/255, green: 128/255,
+                                                    blue: 128/255),
                             text: "Your confirm password should be the same as password", isStrikeThrough:
                                 userRegistrationViewModel.isPasswordConfirmValid)
-                
+            
                 .padding()
                 .padding(.bottom, 50)
             
@@ -70,12 +70,12 @@ struct RegistrationForm: View {
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(userRegistrationViewModel.isReadySubmit ?
-                                    
-                                    LinearGradient(gradient: Gradient(colors:
-                                                                        [Color(red: 251/255, green: 128/255, blue: 128/255),
-                                                                         Color(red: 253/255, green: 193/255, blue: 104/255)]),
-                                                   startPoint: .leading, endPoint: .trailing)
-                                    : LinearGradient(gradient: Gradient(colors: [Color.secondary, Color.secondary]), startPoint: .leading, endPoint: .trailing))
+                                
+                                LinearGradient(gradient: Gradient(colors:
+                                                                    [Color(red: 251/255, green: 128/255, blue: 128/255),
+                                                                     Color(red: 253/255, green: 193/255, blue: 104/255)]),
+                                               startPoint: .leading, endPoint: .trailing)
+                                : LinearGradient(gradient: Gradient(colors: [Color.secondary, Color.secondary]), startPoint: .leading, endPoint: .trailing))
                     .cornerRadius(10)
                     .padding(.horizontal)
                 

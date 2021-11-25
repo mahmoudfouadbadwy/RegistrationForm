@@ -24,29 +24,28 @@ class UserRegistrationViewModel: ObservableObject {
     private var cancellableSet: Set<AnyCancellable> = []
     
     init() {
+        
         $username
-            .receive(on: RunLoop.main)
-            .map{
+            .receive(on: DispatchQueue.main)
+            .map {
                 $0.count >= 4
             }
             .assign(to: \.isUsernameLengthValid, on: self)
             .store(in: &cancellableSet)
         
         $password
-            .receive(on: RunLoop.main)
-            .map { password in
-                return password.count >= 8
+            .receive(on: DispatchQueue.main)
+            .map {
+                $0.count >= 8
             }
             .assign(to: \.isPasswordLengthValid, on: self)
             .store(in: &cancellableSet)
         
-        
         $password
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .map { password in
                 let pattern = "[A-Z]"
-                if let _ = password.range(of:
-                                            pattern, options: .regularExpression) {
+                if let _ = password.range(of: pattern, options: .regularExpression) {
                     return true
                 } else {
                     return false
@@ -57,19 +56,18 @@ class UserRegistrationViewModel: ObservableObject {
             .store(in: &cancellableSet)
         
         Publishers.CombineLatest($password, $passwordConfirm)
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .map { (password, passwordConfirm) in
                 return !passwordConfirm.isEmpty &&
                     (passwordConfirm == password)
             }
-            .assign(to: \.isPasswordConfirmValid, on:
-                        self)
+            .assign(to: \.isPasswordConfirmValid, on: self)
             .store(in: &cancellableSet)
         
         
         $isReadySubmit
-            .receive(on: RunLoop.main)
-            .map {[weak self] _ in
+            .receive(on: DispatchQueue.main)
+            .map { [weak self] _ in
                 
                 self!.isUsernameLengthValid &&
                 self!.isPasswordLengthValid &&
